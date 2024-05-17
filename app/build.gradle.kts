@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.hilt.android)
     alias(libs.plugins.ksp)
 }
 
@@ -82,4 +83,6 @@ dependencies {
     //dimen sdp ssp
     implementation(libs.sdp.android)
     implementation(libs.ssp.android)
+
+    implementation(libs.androidx.material.icons.extended)
 }

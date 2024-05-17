@@ -1,7 +1,7 @@
 package com.mlab.nav.repo.remote
 
 import com.mlab.nav.di.IoDispatcher
-import com.compose.friendship.model.UserInfo
+import com.mlab.nav.model.UserInfo
 import com.mlab.nav.RequestState
 import com.mlab.nav.repo.UserRepo
 import io.ktor.client.HttpClient

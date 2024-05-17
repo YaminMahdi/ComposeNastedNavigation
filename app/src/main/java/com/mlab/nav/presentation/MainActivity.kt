@@ -10,10 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
-import com.mlab.nav.navigation.MainScreens
-import com.mlab.nav.navigation.SetupMainNavGraph
+import com.mlab.nav.navigation.Screens
+import com.mlab.nav.navigation.graph.SetupMainNavGraph
 import com.mlab.nav.ui.theme.ComposeNavTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private var keepSplashOpened = true
 
@@ -27,7 +29,7 @@ class MainActivity : ComponentActivity() {
             ComposeNavTheme {
                 SetupMainNavGraph(
                     navController = navController,
-                    startDestination = MainScreens.Home,
+                    startDestination = Screens,
                     onDataLoaded = { keepSplashOpened = false }
                 )
             }

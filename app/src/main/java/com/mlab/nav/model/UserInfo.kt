@@ -1,4 +1,4 @@
-package com.compose.friendship.model
+package com.mlab.nav.model
 
 
 import android.os.Parcelable
@@ -17,6 +17,4 @@ data class UserInfo(
     var name: String = "",
     @JsonProperty("status")
     var status: String = ""
-) : Parcelable{
-    fun toUserRealmObject() = UserRealmObject(id = id, name = name, email = email, status = status, gender = gender)
-}
+) : Parcelable

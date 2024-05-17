@@ -1,7 +1,7 @@
 package com.mlab.nav.repo
 
 import com.mlab.nav.RequestState
-import com.compose.friendship.model.UserInfo
+import com.mlab.nav.model.UserInfo
 
 interface UserRepo {
 

@@ -4,8 +4,9 @@ import androidx.annotation.IdRes
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.compose.friendship.model.UserInfo
 import com.mlab.nav.RequestState
+import com.mlab.nav.model.UserInfo
+import com.mlab.nav.navigation.MainScreenType
 import com.mlab.nav.repo.UserRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,6 +22,12 @@ class UserViewModel @Inject constructor(
     private val remoteRepo: UserRepo,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
+    var currentBottomNavDestination  = savedStateHandle.getStateFlow("currentBottomNavDestination", MainScreenType.Home.name)
+
+    fun changeBottomNavDestination(value: String) {
+            savedStateHandle["currentBottomNavDestination"] = value
+   }
+
     private val _usersCopy = MutableStateFlow(listOf<UserInfo>())
     private val _users = MutableStateFlow(listOf<UserInfo>())
     val users = _users.asStateFlow()
