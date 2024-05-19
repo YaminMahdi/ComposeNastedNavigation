@@ -20,7 +20,7 @@ fun NewsScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Blue.copy(.05f)),
+            .background(Color.Blue.copy(.085f)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ){

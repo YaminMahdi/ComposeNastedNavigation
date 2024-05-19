@@ -1,13 +1,18 @@
 package com.mlab.nav.navigation.graph
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -22,6 +27,7 @@ import com.mlab.nav.navigation.route.userDetailsRoute
 import com.mlab.nav.presentation.UserViewModel
 import kotlinx.coroutines.flow.mapNotNull
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun SetupMainNavGraph(
     startDestination: Any,
@@ -31,8 +37,11 @@ fun SetupMainNavGraph(
     val context = LocalContext.current
     val viewModel = hiltViewModel<UserViewModel>(context as ViewModelStoreOwner)
     val backStack by navController.currentBackStackEntryFlow.mapNotNull { it.destination.route }
-        .collectAsState(Screens.serializer().route)
+        .collectAsStateWithLifecycle(Screens.serializer().route)
     val currentBottomNavDestination by viewModel.currentBottomNavDestination.collectAsStateWithLifecycle()
+    val currentMainNavDestination = backStack
+        .split('.').lastOrNull()
+        ?.split('/')?.firstOrNull() ?: ""
     val isOnMainScreen = backStack == Screens.serializer().route
     var mainModifier : Modifier
     Scaffold(
@@ -40,20 +49,18 @@ fun SetupMainNavGraph(
         topBar = {
             TopBar(
                 isOnMainScreen = isOnMainScreen,
-                title =
-                if (isOnMainScreen)
+                title = if (isOnMainScreen)
                     currentBottomNavDestination
                 else
-                    backStack
-                        .split('.').last()
-                        .split('/').first(),
+                    currentMainNavDestination,
                 onBackPress = {
                     navController.popBackStack()
                 }
             )
-        }
+        },
+        contentWindowInsets = WindowInsets.statusBars
     ) {
-        mainModifier = Modifier.padding(top = it.calculateTopPadding())
+        mainModifier = Modifier.padding(it)
         NavHost(
             startDestination = startDestination,
             navController = navController
